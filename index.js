@@ -2,6 +2,10 @@ require("dotenv").config()
 const express = require("express")
 const server = express()
 
+server.use(express.json())
+
+const openaiRouter = require("./routes/openai-router")
+server.use("/api/v1/openai", openaiRouter)
 
 server.get("/", (req, res) => {
     res.send("Hello from server")
