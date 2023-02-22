@@ -7,6 +7,9 @@ server.use(express.json())
 const openaiRouter = require("./routes/openai-router")
 server.use("/api/v1/openai", openaiRouter)
 
+const authRouter = require("./routes/auth-router")
+server.use("/api/v1/auth", authRouter)
+
 server.get("/", (req, res) => {
     res.send("Hello from server")
 })
