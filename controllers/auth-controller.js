@@ -2,36 +2,43 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const {StatusCodes} = require("http-status-codes")
 const User = require("../models/user")
+const bcrypt = require("bcrypt")
 
 const login = async (req, res) => {
   const { username, password } = req.body;
 
   if (!username || !password) {
-    res.status(StatusCodes.BAD_REQUEST).json({
+    return res.status(StatusCodes.BAD_REQUEST).json({
       msg: "Login or password not provided"
     })
   }
 
   const user = await User.findOne({
-    username: username,
-    password: password
+    username: username
   })
 
-  console.log(user)
-  if (user) {
+  if (!user) {
+    return res.status(StatusCodes.NOT_FOUND).send({
+      msg: "User not found"
+    })
+  }
+
+  const isPasswordOk = await bcrypt.compare(password, user.password)
+
+  if (!isPasswordOk) {
+    return res.status(StatusCodes.BAD_REQUEST).send({
+      msg: "Not authenticated"
+    })
+  }
+
     const token = jwt.sign({
       username: user.username,
       isadmin: user.isAdmin
     }, process.env.SECRET)
+
     res.status(StatusCodes.OK).send({
       token: token
     })
-  }
-  else {
-    res.status(StatusCodes.NOT_FOUND).send({
-      msg: "user not found"
-    })
-  }
 
 };
 
