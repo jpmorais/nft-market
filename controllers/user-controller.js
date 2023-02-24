@@ -33,4 +33,18 @@ const listUsers = async (req, res) => {
     res.status(StatusCodes.OK).send(users)
 }
 
-module.exports = {addUser, listUsers}
+const changeAdminStatus = async (req, res) => {
+    const {id} = req.params
+    const {isadmin} = req.body
+    if (!isadmin) {
+        return res.status(StatusCodes.BAD_REQUEST).send({
+            msg: "info about admin not provided"
+        })
+    }
+    const newUser = await User.findOneAndUpdate({_id: id}, {
+        isAdmin: isadmin
+    },{new: true}).select("username isAdmin") 
+    res.status(StatusCodes.ACCEPTED).send(newUser)
+}
+
+module.exports = {addUser, listUsers, changeAdminStatus}
