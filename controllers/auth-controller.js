@@ -44,7 +44,8 @@ const login = async (req, res) => {
 
 const authenticate = async (req, res,next) => {
     if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
-        token = req.headers.authorization.split(" ")[1]
+      console.log(req.headers)  
+      token = req.headers.authorization.split(" ")[1]
         
         const {username, isadmin} = jwt.verify(token, process.env.SECRET)
         if (isadmin) {
