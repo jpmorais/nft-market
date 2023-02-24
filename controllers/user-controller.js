@@ -28,4 +28,9 @@ const addUser = async (req, res) => {
     })
 }
 
-module.exports = {addUser}
+const listUsers = async (req, res) => {
+    const users = await User.find({}).select('username isAdmin')
+    res.status(StatusCodes.OK).send(users)
+}
+
+module.exports = {addUser, listUsers}
