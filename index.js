@@ -3,7 +3,10 @@ require("express-async-errors")
 const {StatusCodes} = require("http-status-codes")
 const express = require("express")
 const server = express()
+const cors = require("cors")
 
+
+server.use(cors())
 server.use(express.json())
 
 const openaiRouter = require("./routes/openai-router")
