@@ -20,6 +20,10 @@ server.use("/api/v1/auth", authRouter)
 const userRouter = require("./routes/user-router")
 server.use("/api/v1/user", userRouter)
 
+const etherRouter = require("./routes/ether-router")
+server.use("/api/v1/ether", etherRouter)
+
+
 server.get("/", (req, res) => {
     res.send("Hello from server")
 })

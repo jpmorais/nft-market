@@ -13,6 +13,13 @@ const userSchema = new mongoose.Schema({
     isAdmin: {
         type: Boolean,
         default: false
+    },
+    account: {
+        type: String,
+        unique: true
+    },
+    message: {
+        type: String
     }
 })
 
