@@ -17,7 +17,14 @@ const newImage = async (req, res) => {
       size: "512x512",
     });
   
-    res.send(response.data["data"][0]["url"]);      
+    const retorno = {
+      status: "success",
+      data: {
+        url: response.data["data"][0]["url"]
+      }
+    }
+
+    res.send(retorno);      
   } catch (error) {
     res.status(500).send("Error ", error)
   }
