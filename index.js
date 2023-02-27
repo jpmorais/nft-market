@@ -9,13 +9,18 @@ const cors = require("cors")
 server.use(cors())
 server.use(express.json())
 
+const imageRouter = require("./routes/image-router")
+server.use("/api/v1/images", imageRouter)
+
+const pinataRouter = require("./routes/pinata-router")
+server.use("/api/v1/ipfs", pinataRouter)
+
 const openaiRouter = require("./routes/openai-router")
 server.use("/api/v1/openai", openaiRouter)
 
 const authRouter = require("./routes/auth-router")
 const connectedDB = require("./connect/connectdb")
 server.use("/api/v1/auth", authRouter)
-
 
 const userRouter = require("./routes/user-router")
 server.use("/api/v1/user", userRouter)
