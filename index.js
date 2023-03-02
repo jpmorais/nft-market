@@ -5,9 +5,11 @@ const express = require("express")
 const server = express()
 const cors = require("cors")
 
-
 server.use(cors())
 server.use(express.json())
+
+const nftRouter = require("./routes/nft-router")
+server.use("/api/v1/nft", nftRouter)
 
 const imageRouter = require("./routes/image-router")
 server.use("/api/v1/images", imageRouter)
@@ -27,7 +29,6 @@ server.use("/api/v1/user", userRouter)
 
 const etherRouter = require("./routes/ether-router")
 server.use("/api/v1/ether", etherRouter)
-
 
 server.get("/", (req, res) => {
     res.send("Hello from server")

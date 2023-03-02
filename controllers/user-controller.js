@@ -14,7 +14,8 @@ const addUser = async (req, res) => {
 
     const hashPassword = await bcrypt.hash(password, saltRounds)
     if (!hashPassword) {
-        res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
+        res.status(StatusCodes.BAD_REQUEST).send({
+            status: "Error",
             msg: "Erro ao cadastrar usuário"
         })
     }
