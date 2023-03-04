@@ -51,7 +51,12 @@ const authenticate = async (req, res,next) => {
         if (isadmin) {
             next()
         } else {
-            res.status(StatusCodes.UNAUTHORIZED).send({msg: "Not authorized"})
+            res.status(StatusCodes.UNAUTHORIZED).send({
+              status: "error",
+              data: {
+                  msg: "Not authorized"
+              }      
+          })
         }
     }
     else {
