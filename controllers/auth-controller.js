@@ -18,17 +18,19 @@ const login = async (req, res) => {
   })
 
   if (!user) {
-    return res.status(StatusCodes.NOT_FOUND).send({
-      msg: "User not found"
-    })
+    return res.status(StatusCodes.BAD_REQUEST).send({
+      status: "error",
+      msg: "invalid user or password"
+  })
   }
 
   const isPasswordOk = await bcrypt.compare(password, user.password)
 
   if (!isPasswordOk) {
     return res.status(StatusCodes.BAD_REQUEST).send({
-      msg: "Not authenticated"
-    })
+      status: "error",
+      msg: "invalid user or password"
+  })
   }
 
     const token = jwt.sign({

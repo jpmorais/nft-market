@@ -1,4 +1,5 @@
 const { Configuration, OpenAIApi } = require("openai");
+const {StatusCodes} = require("http-status-codes")
 
 const newImage = async (req, res) => {
 
@@ -8,13 +9,13 @@ const newImage = async (req, res) => {
     });
     const openai = new OpenAIApi(configuration);
   
-    const {prompt} = req.body
+    const {prompt, size} = req.body
     console.log(`prompt ${prompt}`)
   
     const response = await openai.createImage({
       prompt: prompt,
       n: 1,
-      size: "512x512",
+      size: size,
     });
   
     const retorno = {
@@ -24,9 +25,13 @@ const newImage = async (req, res) => {
       }
     }
 
-    res.send(retorno);      
+    res.status(StatusCodes.CREATED).send(retorno);      
+
   } catch (error) {
-    res.status(500).send("Error ", error)
+    res.status(500).send({
+      status: "error",
+      msg: "error generating the image"
+    })
   }
 };
 
